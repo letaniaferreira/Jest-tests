@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [ disabled, setDisabled ] = useState(false);
+  // const NewState = disabled === false ? true : false;
   const [ buttonColor, setButtonColor ] = useState('red');
   const NewButtoColor = buttonColor === 'red' ? 'blue' : 'red';
   return (
@@ -10,9 +11,16 @@ function App() {
       <button 
       style={{backgroundColor: buttonColor}}
       onClick={ () => setButtonColor(NewButtoColor)}
+      disabled={disabled}
       >
       Change to {NewButtoColor}
       </button>
+      <input 
+      type="checkbox"
+      defaultChecked={disabled}
+      aria-checked={disabled}
+      onClick={ (e) => setDisabled(e.target.checked)}
+      />
     </div>
   );
 }
