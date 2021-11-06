@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import App from './App';
+import App, { replaceCamelWhitSpaces } from './App';
+// import { replaceCamelWhitSpaces } from './App';
 
 // finds element with role of button and correct text
 test('button has correct initial color', () => {
@@ -24,7 +25,7 @@ test('initial conditions', () => {
   //check that checkbox starts out unchecked
   const checkBox = screen.getByRole('checkbox');
   expect(checkBox).not.toBeChecked();
-})
+});
 
 test('checkbox disables button on first click and enables button after second click', () => {
   render(<App />);
@@ -37,7 +38,7 @@ test('checkbox disables button on first click and enables button after second cl
   fireEvent.click(checkBox);
   expect(colorButton).toBeEnabled();
 
-})
+});
 
 test('disabled button renders gray and returns to red when enabled', () => {
   render(<App />);
@@ -69,4 +70,18 @@ test('eneabled button to make blue, diable rendering gray and return to blue whe
   // re-enable button
   fireEvent.click(checkBox);
   expect(colorButton).toHaveStyle({ backgroundColor: 'blue' })
-})
+});
+
+describe('spaces before camel-case Capital letters', () => {
+  test('works for no inner capital letter', () => {
+    expect(replaceCamelWhitSpaces('Red')).toBe('Red');
+  }) ;
+  test('works for one inner capital letter', () => {
+    expect(replaceCamelWhitSpaces('MidnightBlue')).toBe('Midnight Blue');
+
+  })
+  test('workes with multiple inner capitals', () => {
+    expect(replaceCamelWhitSpaces('MediumVioletRed')).toBe('Medium Violet Red');
+  });
+
+});
